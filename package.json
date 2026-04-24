@@ -1,0 +1,9 @@
+{
+  "name": "device-id-api",
+  "version": "1.0.0",
+  "description": "Simple API to store multiple device IDs",
+  "main": "api/server.js",
+  "dependencies": {
+    "json-server": "^0.17.4"
+  }
+}
