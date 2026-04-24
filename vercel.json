@@ -5,6 +5,17 @@
     }
   },
   "rewrites": [
-    { "source": "/(.*)", "destination": "/api/server.js" }
+    {
+      "source": "/connect/acces",
+      "destination": "/api/server.js"
+    },
+    {
+      "source": "/data/register",
+      "destination": "/api/server.js"
+    },
+    {
+      "source": "/(.*)",
+      "destination": "/api/server.js"
+    }
   ]
 }
