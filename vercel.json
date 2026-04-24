@@ -6,11 +6,11 @@
   },
   "rewrites": [
     {
-      "source": "/connect/acces",
+      "source": "/data/accesToken",
       "destination": "/api/server.js"
     },
     {
-      "source": "/data/register",
+      "source": "/verify/:deviceId",
       "destination": "/api/server.js"
     },
     {
