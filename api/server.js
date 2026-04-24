@@ -1,26 +1,40 @@
+
 const jsonServer = require('json-server');
 const server = jsonServer.create();
 const router = jsonServer.router('data.json');
 const middlewares = jsonServer.defaults();
 
-// Gunakan middleware default (logging, CORS, static)
 server.use(middlewares);
 
-// Custom route untuk endpoint /data/register
-server.get('/data/register', (req, res) => {
-  // Baca data dari router.db
+// *** ENDPOINT BARU: /connect/acces ***
+server.get('/connect/acces', (req, res) => {
   const db = router.db;
   const devices = db.get('devices').value();
   
   res.json({
-    status: 'success',
-    endpoint: '/data/register',
+    status: 'connected',
+    message: 'Akses berhasil',
     total_devices: devices.length,
-    devices: devices
+    devices: devices,
+    endpoint: '/connect/acces',
+    timestamp: new Date().toISOString()
   });
 });
 
-// Gunakan router default json-server
-server.use(router);
+// Endpoint /data/register (dari sebelumnya)
+server.get('/data/register', (req, res) => {
+  const db = router.db;
+  const devices = db.get('devices').value();
+  
+  res.json({
+    success: true,
+    message: 'Data device ID berhasil diambil',
+    endpoint: '/data/register',
+    total_devices: devices.length,
+    devices: devices,
+    timestamp: new Date().toISOString()
+  });
+});
 
+server.use(router);
 module.exports = server;
