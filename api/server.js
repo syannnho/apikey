@@ -5,23 +5,24 @@ const middlewares = jsonServer.defaults();
 
 server.use(middlewares);
 
-// ========== ENDPOINT VERIFIKASI: /data/accesToken ==========
-// Cara panggil: /data/accesToken?deviceId=ABC123XYZ
+// ========== ENDPOINT VERIFIKASI DENGAN PARAMETER "token" ==========
+// Cara panggil: /data/accesToken?token=ABC123XYZ
 server.get('/data/accesToken', (req, res) => {
   const db = router.db;
   const devices = db.get('devices').value();
-  const deviceId = req.query.deviceId;
+  const token = req.query.token;  // ← UBAH: dari deviceId jadi token
   
-  // Jika parameter deviceId tidak disertakan
-  if (!deviceId) {
+  // Jika parameter token tidak disertakan
+  if (!token) {
     return res.status(400).json({
-      error: 'Parameter deviceId wajib diisi',
-      example: '/data/accesToken?deviceId=ABC123XYZ'
+      status: 'Error',
+      message: 'Parameter token wajib diisi',
+      example: '/data/accesToken?token=ABC123XYZ'
     });
   }
   
-  // Cek apakah device ID ada dalam database
-  const exists = devices.includes(deviceId);
+  // Cek apakah token (device ID) ada dalam database
+  const exists = devices.includes(token);
   
   if (exists) {
     res.json({
@@ -34,7 +35,7 @@ server.get('/data/accesToken', (req, res) => {
   }
 });
 
-// Endpoint lain (opsional)
+// Endpoint verifikasi dengan path parameter (opsional, tetap pakai deviceId)
 server.get('/verify/:deviceId', (req, res) => {
   const db = router.db;
   const devices = db.get('devices').value();
